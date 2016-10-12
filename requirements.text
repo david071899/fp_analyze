@@ -1,0 +1,6 @@
+beautifulsoup4==4.5.1
+Django==1.10.2
+facebook-sdk==2.0.0
+jieba==0.38
+psycopg2==2.6.2
+requests==2.11.1
