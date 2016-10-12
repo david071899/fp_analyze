@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
+from django.shortcuts import  render_to_response
 
 from data_parser.models import Post, User, Comment
 
@@ -49,6 +50,8 @@ def parse_all_post (request):
 
       print e  
       break
+
+  return render_to_response('index.html', RequestContext(request, locals()))
 
 def create_post (data):
 
