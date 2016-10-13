@@ -15,9 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from data_parser.views import parse_all_post
+
+from data_parser.views import parse_all_post, parse_all_post_content
+
+from real_time_api.views import posts
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^parse_all_post_content/', parse_all_post_content),
     url(r'^parse_all_post/', parse_all_post),
+    url(r'^api/amount_of_amount/', posts),
 ]

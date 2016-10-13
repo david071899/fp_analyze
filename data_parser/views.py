@@ -10,6 +10,49 @@ import requests
 import facebook
 
 # Create your views here.
+
+
+def parse_all_post_content (request):
+
+  app_data = {'app_id': '253935675007631',
+              'app_secret': '4248e9d611cb3ad467d73614a96c2a5e'}
+
+  access_token_request_url = ("https://graph.facebook.com/oauth/access_token?"
+    "client_id=253935675007631"
+    "&client_secret=4248e9d611cb3ad467d73614a96c2a5e"
+    "&grant_type=client_credentials")
+
+  access_token = requests.get(access_token_request_url).text.split('=')[-1]
+
+  graph = facebook.GraphAPI(access_token = access_token, version = '2.2')
+
+  cowbeiNTHU_id = graph.get_object(id = 'cowbeiNTHU')['id']
+
+  cowbeiNTHU_post = graph.get_connections(id = cowbeiNTHU_id, connection_name = 'posts?fields=message,created_time')
+
+  while True:
+    try:
+      for p in cowbeiNTHU_post['data']:
+        if 'message' in p.keys():
+          print p['message']
+
+          Post.objects.update_or_create(
+            post_id = p['id'],
+            defaults = {
+              'content': p['message'],
+              'release_time': p['created_time']
+            }
+          )
+
+      cowbeiNTHU_post = requests.get(cowbeiNTHU_post['paging']['next']).json()
+    except Exception as e:
+      print e
+      continue
+
+
+  return render_to_response('index.html', RequestContext(request, locals()))
+
+
 def parse_all_post (request):
 
   app_data = {'app_id': '253935675007631',
