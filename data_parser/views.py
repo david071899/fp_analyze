@@ -8,19 +8,22 @@ from data_parser.models import Post, User, Comment
 
 import requests
 import facebook
+import dotenv
+import os
 
-# Create your views here.
-
+#load env variable
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+dotenv.load_dotenv(dotenv_path)
 
 def parse_all_post_content (request):
 
-  app_data = {'app_id': '253935675007631',
-              'app_secret': '4248e9d611cb3ad467d73614a96c2a5e'}
+  app_data = {'app_id': os.environ.get("APP_ID"),
+              'app_secret': os.environ.get("APP_SECRET")}
 
   access_token_request_url = ("https://graph.facebook.com/oauth/access_token?"
-    "client_id=253935675007631"
-    "&client_secret=4248e9d611cb3ad467d73614a96c2a5e"
-    "&grant_type=client_credentials")
+    "client_id={app_id}"
+    "&client_secret={app_secret}"
+    "&grant_type=client_credentials").format(**app_data)
 
   access_token = requests.get(access_token_request_url).text.split('=')[-1]
 
