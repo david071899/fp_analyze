@@ -52,6 +52,10 @@ def parse_all_post_content (request):
       cowbeiNTHU_post = requests.get(cowbeiNTHU_post['paging']['next']).json()
     except Exception as e:
       print e
+
+      if e == 'paging':
+        break
+
       continue
 
 
