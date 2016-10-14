@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
+
 from django.shortcuts import render
 from django.shortcuts import  render_to_response
 
@@ -12,13 +14,13 @@ import dotenv
 import os
 
 #load env variable
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+dotenv_path = os.path.join(settings.BASE_DIR, '.env')
 dotenv.load_dotenv(dotenv_path)
 
 def parse_all_post_content (request):
 
-  app_data = {'app_id': os.environ.get("APP_ID"),
-              'app_secret': os.environ.get("APP_SECRET")}
+  app_data = {'app_id': os.environ.get("FB_APP_ID"),
+              'app_secret': os.environ.get("FB_APP_SECRET")}
 
   access_token_request_url = ("https://graph.facebook.com/oauth/access_token?"
     "client_id={app_id}"
