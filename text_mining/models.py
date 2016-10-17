@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 
-from data_parser.models import Post, User, Comment
+# from fp_analyze.data_parser.models import Post, User, Comment
 
 class Term (models.Model):
   value = models.CharField(max_length = 255)

@@ -48,14 +48,13 @@ def parse_all_post_content (request):
               'release_time': p['created_time']
             }
           )
-
-      cowbeiNTHU_post = requests.get(cowbeiNTHU_post['paging']['next']).json()
-    except Exception as e:
-      print e
-
-      if e == 'paging':
+      if 'paging' in cowbeiNTHU_post:
+        cowbeiNTHU_post = requests.get(cowbeiNTHU_post['paging']['next']).json()
+      else:
         break
 
+    except Exception as e:
+      print e
       continue
 
 
