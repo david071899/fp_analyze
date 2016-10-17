@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'data_parser',
     'real_time_api',
-    'front'
+    'front',
+    'text_mining',
 ]
 
 MIDDLEWARE = [

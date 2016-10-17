@@ -2,7 +2,9 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-# Create your models here.
+from django.text_mining.model import Term
+
+from jsonfield import JSONField
 
 class Post (models.Model):
   post_id = models.CharField(max_length = 255)
@@ -10,6 +12,8 @@ class Post (models.Model):
   release_time = models.DateTimeField()
   like_count = models.IntegerField(default = 0)
   comment_count = models.IntegerField(default = 0)
+  term_frequency = JSONField()
+  terms = models.ManyToManyField(Term, through = 'TermOfPost')
 
   def __str__(self):
     return self.post_id
@@ -33,4 +37,7 @@ class Comment (models.Model):
   def __str__(self):
     return self.comment_id
 
-
+class TermOfPost (models.Model):
+  term = ForeignKey(Term, on_delete = models.SET_NULL)
+  post = ForeignKey(Post, on_delete = models.SET_NULL)
+  times = models.IntegerField(default = 0)
