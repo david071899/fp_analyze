@@ -12,6 +12,7 @@ class Post (models.Model):
   release_time = models.DateTimeField()
   like_count = models.IntegerField(default = 0)
   comment_count = models.IntegerField(default = 0)
+  mining_check = models.BooleanField(default = False)
   term_frequency = JSONField()
   terms = models.ManyToManyField('text_mining.Term', through = 'TermOfPost')
 
