@@ -14,7 +14,7 @@ class Post (models.Model):
   comment_count = models.IntegerField(default = 0)
   mining_check = models.BooleanField(default = False)
   term_frequency = JSONField()
-  terms = models.ManyToManyField('text_mining.Term', through = 'TermOfPost')
+  terms = models.ManyToManyField('text_mining.Term',through = 'TermOfPost')
 
   def __str__(self):
     return self.post_id
@@ -39,6 +39,6 @@ class Comment (models.Model):
     return self.comment_id
 
 class TermOfPost (models.Model):
-  term = models.ForeignKey('text_mining.Term', on_delete = models.CASCADE)
-  post = models.ForeignKey(Post, on_delete = models.CASCADE)
+  term = models.ForeignKey('text_mining.Term', null = True,on_delete = models.SET_NULL)
+  post = models.ForeignKey(Post, null = True,on_delete = models.SET_NULL)
   quantity = models.IntegerField(default = 0)

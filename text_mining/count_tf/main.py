@@ -32,7 +32,7 @@ def start_segment ():
 
 def remove_punctuation (text):
 
-  text = re.sub("[\s+\.\!\/_,$:><=?%^*(+\"\']+|[+——：！，。“「」＝＋？、~@#￥%……&*（）]+".decode("utf8"), "".decode("utf8"), text)
+  text = re.sub("[s+.!/_,$:><=?%^*(+\"\']+|[+——：！，。“「」＝＋？、~@#￥%……&*（）]+".decode("utf8"), "".decode("utf8"), text)
 
   return text
 
@@ -72,12 +72,14 @@ def seg_article(post_generator):
     print post.id
     # 刪除靠北清大 title & release time
     content = del_surplus_string(post.content)
+    # 刪除標點符號
+    content = remove_punctuation(content)
 
     seg_list = jieba.lcut(content)
 
     # 清除 \n & 空白
-    seg_list = filter(lambda a: a != '\n', seg_list)
-    seg_list = filter(lambda a: a != ' ', seg_list)
+    seg_list = filter(lambda a: a != '\n' and a != ' ', seg_list)
+    # seg_list = filter(lambda a: a != ' ', seg_list)
 
     result = dict()
 
