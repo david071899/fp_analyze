@@ -8,6 +8,7 @@ import sys
 import re
 from threading import Thread
 import jieba
+import jieba.posseg as pseg
 
 def start_segment ():
   jieba.enable_parallel(4)
@@ -32,7 +33,7 @@ def start_segment ():
 
 def remove_punctuation (text):
 
-  text = re.sub("[s+.!/_,$:><=?%^*(+\"\']+|[+——：！，。“「」＝＋？、~@#￥%……&*（）]+".decode("utf8"), "".decode("utf8"), text)
+  text = re.sub("[s+.!/_,$-:><=?%~^*()+\"\']+|[+——：！，。“「」＝＋？、～@#￥%……&*（）]+".decode("utf8"), "".decode("utf8"), text)
 
   return text
 
@@ -75,19 +76,20 @@ def seg_article(post_generator):
     # 刪除標點符號
     content = remove_punctuation(content)
 
-    seg_list = jieba.lcut(content)
+    seg_list = pseg.lcut(content)
 
     # 清除 \n & 空白
-    seg_list = filter(lambda a: a != '\n' and a != ' ', seg_list)
-    # seg_list = filter(lambda a: a != ' ', seg_list)
+    seg_list = filter(lambda a: a.word != '\n' and a.word != ' ', seg_list)
 
     result = dict()
 
-    for word in seg_list:
+    for pair in seg_list:
 
       # 重複的詞跳過
-      if word not in result.keys():                
-        result[word] = seg_list.count(word)
+      if pair.word not in result.keys():
+        quan = seg_list.count(pair)
+        flag = pair.flag
+        result[pair.word] = {'quan': quan, 'flag': flag}
 
     for key,value in result.iteritems():
       try:
@@ -95,7 +97,8 @@ def seg_article(post_generator):
         Term.objects.get_or_create(             
           value = key,
           defaults = {
-            'frequency_of_all_post': 0
+            'frequency_of_all_post': 0,
+            'flag': value['flag']
           }
         )
 
@@ -109,7 +112,7 @@ def seg_article(post_generator):
           post = post,
           term = term,
           defaults = {
-            'quantity': value
+            'quantity': value['quan']
           }
         )
       except:
