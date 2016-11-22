@@ -16,7 +16,7 @@ def all_terms(requrest):
 
   data = data.order_by('-frequency_of_all_post')
 
-  json_data = [list(x) for x in data.values_list('value', 'frequency_of_all_post')][:500]
+  json_data = [list(x) for x in data.values_list('value', 'frequency_of_all_post')][:100]
 
   response = JsonResponse(json_data, safe = False)
   response["Access-Control-Allow-Origin"] = "*"
