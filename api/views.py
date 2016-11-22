@@ -14,7 +14,7 @@ def all_terms(requrest):
 
   data = data.filter(Q(flag = 'n') | Q(flag = 'nz') | Q(flag = 'nr') | Q(flag = 'ns') )
 
-  json_data = [list(x) for x in data.values_list('value', 'frequency_of_all_post')]
+  json_data = [list(x) for x in data.values_list('value', 'frequency_of_all_post')][:500]
 
   response = JsonResponse(json_data, safe = False)
   response["Access-Control-Allow-Origin"] = "*"
