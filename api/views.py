@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 import json
 
@@ -11,4 +11,10 @@ def all_terms(requrest):
 
   json_data = [list(x) for x in Term.objects.values_list('value', 'frequency_of_all_post')]
 
-  return JsonResponse(json_data, safe = False)
+  response = JsonResponse(json_data, safe = False)
+  response["Access-Control-Allow-Origin"] = "*"
+  response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+  response["Access-Control-Max-Age"] = "1000"
+  response["Access-Control-Allow-Headers"] = "*"
+
+  return response
