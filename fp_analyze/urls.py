@@ -34,4 +34,4 @@ urlpatterns = [
     url(r'^text_mining/laern_seg_rnn', laern_seg_rnn),
     url(r'^api/all_terms', all_terms),
     url(r'^index', index),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
