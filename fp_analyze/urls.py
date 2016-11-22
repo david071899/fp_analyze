@@ -18,15 +18,15 @@ from django.contrib import admin
 
 from data_parser.views import parse_all_post, parse_all_post_content
 
-from real_time_api.views import posts
-
 from text_mining.views import count_tf, laern_seg_rnn
+
+from api.views import all_terms
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^parse_all_post_content/', parse_all_post_content),
     url(r'^parse_all_post/', parse_all_post),
-    url(r'^api/amount_of_amount/', posts),
     url(r'^text_mining/count_tf', count_tf),
     url(r'^text_mining/laern_seg_rnn', laern_seg_rnn),
+    url(r'^api/all_terms', all_terms),
 ]

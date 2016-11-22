@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'data_parser',
-    'real_time_api',
-    'front',
     'text_mining',
 ]
 
