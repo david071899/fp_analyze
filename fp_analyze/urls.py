@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 from data_parser.views import parse_all_post, parse_all_post_content
 
@@ -32,4 +34,4 @@ urlpatterns = [
     url(r'^text_mining/laern_seg_rnn', laern_seg_rnn),
     url(r'^api/all_terms', all_terms),
     url(r'^index', index),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
