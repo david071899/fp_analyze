@@ -34,22 +34,28 @@
   new Vue({
     el: '#main',
     data: {
-      all_data: [['foo', 120], ['bar', 60]]
+      all_data: []
     },
     compiled: function () {
       // request to get the data
     },
     ready: function () {
+      let vue = this;
+      let input_data = [];
 
       $.ajax({
         url: 'http://140.114.89.71:8000/api/all_terms',
         type: 'GET',
         crossDomain : true,
         success: function (data) {
-          console.log(data);
-          WordCloud(document.getElementById('main'), { list: data, backgroundColor: 'white' });
-        }
+          input_data = data;  
+        },
+        async: false
       })
+
+      console.log(input_data);
+
+      WordCloud(document.getElementById('main'), { list: input_data, backgroundColor: 'white' });
 
     }
   })
