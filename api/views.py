@@ -21,7 +21,7 @@ def all_terms(requrest):
   for i in data:
     i.frequency_of_all_post = i.frequency_of_all_post / shift_num
 
-  json_data = [[x,y] for x in data]
+  json_data = [[x.value, x.frequency_of_all_post] for x in data]
 
   response = JsonResponse(json_data, safe = False)
   response["Access-Control-Allow-Origin"] = "*"
