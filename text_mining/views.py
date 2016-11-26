@@ -33,6 +33,6 @@ def tf_idf (request):
   for post in Post.objects.filter(mining_check = True):
     term_amount = post.termofpost_set.all().aggregate(Sum('quantity'))['quantity__sum']
     for term in post.termofpost_set.all():
-      term.tf_idf = term.term.idf * (term.quantity / term_amount)
+      term.tf_idf = term.term.idf * (term.quantity / float(term_amount))
       term.save()
       print term.tf_idf
