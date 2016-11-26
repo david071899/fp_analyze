@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
+from django.db.models import Sum
 
 from data_parser.models import Post, User, Comment, TermOfPost
 from text_mining.models import Term
@@ -28,5 +29,10 @@ def count_idf (request):
     term.save()
     print term.idf
 
-def count_tf_idf (request):
-  pass
+def tf_idf (request):
+  for post in Post.objects.filter(mining_check = True):
+    term_amount = post.termofpost_set.all().aggregate(Sum('quantity'))['quantity__sum']
+    for term in post.termofpost_set.all():
+      term.tf_idf = term.term.idf * (term.quantity / term_amount)
+      term.save()
+      print term.tf_idf

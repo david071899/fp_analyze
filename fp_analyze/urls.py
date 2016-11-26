@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 
 from data_parser.views import parse_all_post, parse_all_post_content
 
-from text_mining.views import count_tf, laern_seg_rnn, count_idf
+from text_mining.views import count_tf, laern_seg_rnn, count_idf, tf_idf
 
 from api.views import all_terms
 
@@ -32,7 +32,8 @@ urlpatterns = [
     url(r'^parse_all_post/', parse_all_post),
     url(r'^text_mining/count_tf', count_tf),
     url(r'^text_mining/laern_seg_rnn', laern_seg_rnn),
-    url(r'^api/all_terms', all_terms),
     url(r'^text_mining/count_idf', count_idf),
+    url(r'^text_mining/tf_idf', tf_idf),
+    url(r'^api/all_terms', all_terms),
     url(r'^index', index),
 ]
