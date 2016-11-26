@@ -42,4 +42,4 @@ class TermOfPost (models.Model):
   term = models.ForeignKey('text_mining.Term', null = True,on_delete = models.SET_NULL)
   post = models.ForeignKey(Post, null = True,on_delete = models.SET_NULL)
   quantity = models.IntegerField(default = 0)
-  tf_idf = models.IntegerField(default = 0)
+  tf_idf = models.FloatField(default = 0)
