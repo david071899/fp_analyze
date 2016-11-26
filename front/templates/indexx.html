@@ -12,6 +12,7 @@
       border-style: solid;
       border-width: 3px;
       border-radius: 20px;
+      padding: 10px 10px 10px 10px;
     }
     [v-cloak] {
       display: none;
@@ -36,27 +37,18 @@
     data: {
       all_data: []
     },
-    compiled: function () {
-      // request to get the data
-    },
     ready: function () {
       let vue = this;
-      let input_data = [];
 
       $.ajax({
         url: 'http://140.114.89.71:8000/api/all_terms',
         type: 'GET',
         crossDomain : true,
         success: function (data) {
-          input_data = data;  
+          WordCloud(document.getElementById('main'), { list: data, backgroundColor: 'white' });
         },
         async: false
       })
-
-      console.log(input_data);
-
-      WordCloud(document.getElementById('main'), { list: input_data, backgroundColor: 'white' });
-
     }
   })
 </script>

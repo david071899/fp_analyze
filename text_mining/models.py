@@ -8,6 +8,7 @@ class Term (models.Model):
   frequency_of_all_post = models.IntegerField(default = 0)
   flag = models.CharField(max_length = 255, default = '')
   created_at = models.DateTimeField(default = '2016-11-01 12:00:00+08:00')
+  idf = models.IntegerField(default = 0)
   related_term = models.ManyToManyField('self')
 
 
