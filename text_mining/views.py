@@ -33,6 +33,13 @@ def tf_idf (request):
   for post in Post.objects.filter(mining_check = True):
     term_amount = post.termofpost_set.all().aggregate(Sum('quantity'))['quantity__sum']
     for term in post.termofpost_set.all():
-      term.tf_idf = term.term.idf * (term.quantity / float(term_amount))
+
+      # only 名詞 count tf_idf
+      if term.flag == 'n' or term.flag == 'nz' or term.flag == 'nr' or term.flag == 'ns':
+        term.tf_idf = term.term.idf * (term.quantity / float(term_amount))
+      else:
+        term.tf_idf = 0
+
       term.save()
+
       print term.tf_idf
