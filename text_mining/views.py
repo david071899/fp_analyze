@@ -32,6 +32,7 @@ def tf_idf (request):
       # only 名詞 count tf_idf
       if term.term.flag == 'n' or term.term.flag == 'nz' or term.term.flag == 'nr' or term.term.flag == 'ns':
         term.tf_idf = term.term.idf * (term.quantity / float(term_amount))
+        term.term.tf_idf_of_all += term.tf_idf
       else:
         term.tf_idf = 0
 
