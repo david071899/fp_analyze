@@ -5,11 +5,6 @@ from django.db.models import Sum
 from data_parser.models import Post, User, Comment, TermOfPost
 from text_mining.models import Term
 
-# import os
-# import sys
-# import re
-# from threading import Thread
-# import jieba
 import math
 
 from count_tf.main import start_segment
