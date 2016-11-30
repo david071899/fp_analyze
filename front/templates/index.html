@@ -4,8 +4,13 @@
   <title>demo</title>
   <meta http-equiv="Access-Control-Allow-Origin" content="*" />
   <style type="text/css">
+    #filter {
+      position: relative;
+      margin-top: 50px;
+      text-align: center;
+    }
     #main {
-      top: 10%;
+      top: 5%;
       left: 10%;
       width: 80%;
       height: 80%;
@@ -18,20 +23,43 @@
       display: none;
     }
   </style>
+  {% load static %}
+  <script type="text/javascript" src="{% static 'wordcloud/src/wordcloud2.js' %}"></script>
+  <script type="text/javascript" src="{% static 'wordcloud2.js' %}"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.js"></script>
 </head>
 <body style="position: absolute;;width: 100%;height: 100%;margin: 0px;">
+  <div id='filter'>
+    <select class="year">
+      <option value="2013">2013</option>
+      <option value="2014">2014</option>
+      <option value="2015">2015</option>
+      <option value="2016">2016</option>
+    </select>
+    <select class="month">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+    </select>
+    <input type="submit" value="submit" class="filter_btn" v-on:click='filter_submit'>
+  </div>
   <div id="main" v-cloak>
     
   </div>
 </body>
-{% load static %}
-<script type="text/javascript" src="{% static 'wordcloud/src/wordcloud2.js' %}"></script>
-<script type="text/javascript" src="{% static 'wordcloud2.js' %}"></script>
-<script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.js"></script>
 <script type="text/javascript">
   new Vue({
     el: '#main',
@@ -46,10 +74,23 @@
         type: 'GET',
         crossDomain : true,
         success: function (data) {
-          WordCloud(document.getElementById('main'), { list: data, backgroundColor: 'white' });
-        },
-        async: false
+          WordCloud(document.getElementById('main'), { list: data, backgroundColor: 'white', rotateRatio: 0 });
+        }
       })
+    },
+    methods: {
+      filter_submit: function () {
+        let year = $(".year option:selected").val();
+        let month = $(".month option:selected").val();
+
+        $.ajax({
+          url: `http://140.114.89.71:8000/api/filter?year=${ year }&month=${ month }`,
+          type: 'GET',
+          success: function (data) {
+            WordCloud(document.getElementById('main'), { list: data, backgroundColor: 'white', rotateRatio: 0 });
+          }
+        })
+      }
     }
   })
 </script>
