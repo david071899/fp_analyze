@@ -32,9 +32,9 @@ def all_terms (requrest):
 
   return response
 
-def filter (requrest):
-  year = request.GET.get('year', '')
-  month = request.GET.get('month', '')
+def filter_post (request):
+  year = request.GET.get('year', 2014)
+  month = request.GET.get('month', 1)
 
   all_posts = Post.objects.filter(release_time__year = year, release_time__month = month)
 
