@@ -54,7 +54,8 @@
       <option value="11">11</option>
       <option value="12">12</option>
     </select>
-    <input type="submit" value="submit" class="filter_btn" v-on:click='filter_submit'>
+    <input type="submit" value="submit" class="filter_btn" v-on:click='filter_submit()'
+>
   </div>
   <div id="main" v-cloak>
     
@@ -62,7 +63,7 @@
 </body>
 <script type="text/javascript">
   new Vue({
-    el: '#main',
+    el: 'body',
     data: {
       all_data: []
     },
@@ -80,6 +81,7 @@
     },
     methods: {
       filter_submit: function () {
+        console.log('yoyo');
         let year = $(".year option:selected").val();
         let month = $(".month option:selected").val();
 
