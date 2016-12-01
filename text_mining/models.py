@@ -15,4 +15,3 @@ class Term (models.Model):
 
 
 
-

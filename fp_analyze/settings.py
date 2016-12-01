@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'data_parser',
     'text_mining',
     'front',
+    'api',
 ]
 
 MIDDLEWARE = [

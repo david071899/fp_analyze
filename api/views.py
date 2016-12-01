@@ -38,6 +38,9 @@ def filter_post (request):
 
   all_posts = Post.objects.filter(release_time__year = year, release_time__month = month)
 
+
+  all_posts = all_posts.prefetch_related('termofpost_set').prefetch_related('terms')
+
   terms_dict = dict()
 
   for post in all_posts:
@@ -47,7 +50,7 @@ def filter_post (request):
       if term.term.value in terms_dict:
         terms_dict[term.term.value] += 10
       else:
-        terms_dict[term.term.value] = 0
+        terms_dict[term.term.value] = 10
 
   json_data = [[key, value] for key, value in terms_dict.iteritems()]
 
