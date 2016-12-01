@@ -59,12 +59,12 @@ def term_rank_by_post (request):
       all_posts = Post.objects.filter(release_time__year = year, release_time__month = month)
       all_terms = list()
       for post in all_posts:
-        for term in post.termofpost_set.order_by('-tf_idf')[:5]:
+        for term in post.termofpost_set.order_by('-tf_idf')[:10]:
           all_terms.append(term.term.value)
 
       terms_set = set(all_terms)
 
-      terms_freq = map(lambda x: [x, all_terms.count(x)] if all_terms.count(x) > 1 else [], terms_set)
+      terms_freq = map(lambda x: [x, all_terms.count(x)] if all_terms.count(x) > 3 else [], terms_set)
       terms_freq = filter(None, terms_freq)
 
       print terms_set
