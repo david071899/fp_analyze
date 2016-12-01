@@ -11,6 +11,10 @@ import jieba
 import jieba.posseg as pseg
 
 def start_segment ():
+  print '--------------------------------'
+  print '          start segment         '
+  print '--------------------------------'
+  
   jieba.enable_parallel(4)
   # 讀取自定義辭典
   for jeiba_dict in os.listdir(os.path.join(os.path.dirname(__file__), '../jieba')): 

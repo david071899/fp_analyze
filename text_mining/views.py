@@ -8,7 +8,7 @@ from api.models import Wordcloud
 
 import math
 
-from count_tf.main import start_segment
+from segment.main import start_segment
 from learn_seg_rnn.main import start_learning
 
 def mining_and_counting (request):
@@ -16,7 +16,7 @@ def mining_and_counting (request):
   count_idf (request)
   tf_idf (request)
   term_rank_by_post (request)
-  
+
 def count_idf (request):
   print '--------------------------------'
   print '       start counting idf       '
@@ -50,6 +50,10 @@ def tf_idf (request):
 
 def term_rank_by_post (request):
 
+  print '--------------------------------'
+  print '    start counting terms rank   '
+  print '--------------------------------'
+
   for year in xrange(2014,2017):
     for month in xrange(1,13):
       all_posts = Post.objects.filter(release_time__year = year, release_time__month = month)
@@ -59,7 +63,9 @@ def term_rank_by_post (request):
           all_terms.append(term.term.value)
 
       terms_set = set(all_terms)
-      terms_freq = [[x,all_terms.count(x)] for x in terms_set]
+
+      terms_freq = map(lambda x: [x, all_terms.count(x)] if all_terms.count(x) > 1 else [], terms_set)
+      terms_freq = filter(None, terms_freq)
 
       print terms_set
 
@@ -73,3 +79,4 @@ def term_rank_by_post (request):
 
 def learn_seg_rnn (request):
   start_learning()
+
