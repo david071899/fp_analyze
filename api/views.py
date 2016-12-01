@@ -55,7 +55,7 @@ def filter_post (request):
 
   # json_data = [[key, value] for key, value in terms_dict.iteritems()]
 
-  json_data = Wordcloud.objects.get(release_time__year = year, , release_time__month = month).word_data
+  json_data = Wordcloud.objects.get(release_time__year = year, release_time__month = month).word_data
 
   response = JsonResponse(json_data, safe = False)
   response["Access-Control-Allow-Origin"] = "*"

@@ -15,7 +15,8 @@ def mining_and_counting (request):
   start_segment()
   count_idf (request)
   tf_idf (request)
-
+  term_rank_by_post (request)
+  
 def count_idf (request):
   print '--------------------------------'
   print '       start counting idf       '
