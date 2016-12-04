@@ -426,6 +426,13 @@
     </section>
     <section class="section section-6 section-color4">
       <div class="panel">
+        <div class="">
+          <input id="input" type="text">
+          <button id="submit">submit</button>
+        </div>
+        <div class="chart">
+          <canvas id="chart-area" width="400" height="400" class="zone chart"></canvas>
+        </div>
       </div>
     </section>
     <section class="section section-7">
@@ -539,29 +546,20 @@
   });
 
   var data = {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      labels: [],
       datasets: [
-          {
-              label: "rank of department",
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1,
-              data: [105, 59, 80, 81, 56, 55, 40],
-          }
+        {
+          label: "rank of department",
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          data: [],
+        }
       ],
   };
   var ctx = $('.section-4 #chart-area');
@@ -632,6 +630,62 @@
   });
 
   // section-6
+  var keyword = '';
+
+  $('.section-6 #submit').on('click', function() {
+    keyword = $('.section-6 #input').val();
+    $.ajax({
+      url: `http://140.114.89.71:8000/api/trend?keyword=${ keyword }`,
+      type: 'GET',
+      success: function (data) {
+        console.log(data);
+        generate_chart(data);
+      }
+    })
+  })
+
+  function generate_chart (data) {
+
+    var chart_data = {
+      labels: data['period'],
+      datasets: [
+        {
+          label: "trend",
+          fill: false,
+          lineTension: 0.1,
+          backgroundColor: "rgba(75,192,192,0.4)",
+          borderColor: "rgba(75,192,192,1)",
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(75,192,192,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: data['trend'],
+          spanGaps: false,
+        }
+      ]
+    };
+
+    var ctx = $('.section-6 #chart-area');
+    var section6_chart = new Chart(ctx, {
+      type: 'line',
+      data: chart_data,
+      options: {
+        animation: {
+          duration: 3000
+        },
+      },
+    });
+  }
+
 
   // section-7
   new Vue({

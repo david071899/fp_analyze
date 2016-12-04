@@ -78,13 +78,16 @@ def trend (request):
   json_data = dict()
 
   json_data['start'] = { 'year': start_year, 'month': start_month }
-  json_data['end'] = { 'year': start_year, 'month': start_month }
+  json_data['end'] = { 'year': end_year, 'month': end_month }
+  json_data['period'] = []
   json_data['trend'] = []
 
   for year in xrange(start_year, end_year+1):
     for month in xrange(start_month, end_month+1):
       query = TermOfPost.objects.filter(post__release_time__year = year, post__release_time__month = month)
       amount = query.filter(term__value = keyword).count()
+      date = str(year) + '/' + str(month)
+      json_data['period'].append(date)
       json_data['trend'].append(amount)
 
   response = JsonResponse(json_data, safe = False)
