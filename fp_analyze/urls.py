@@ -22,7 +22,7 @@ from data_parser.views import parse_all_post, parse_all_post_content
 
 from text_mining.views import mining_and_counting, learn_seg_rnn, term_rank_by_post
 
-from api.views import all_terms, filter_post
+from api.views import all_terms, filter_post, trend
 
 from front.views import index
 
@@ -35,5 +35,6 @@ urlpatterns = [
     url(r'^text_mining/laern_seg_rnn', learn_seg_rnn),
     url(r'^api/all_terms', all_terms),
     url(r'^api/filter_post', filter_post),
+    url(r'^api/trend', trend),
     url(r'^index', index),
 ]
