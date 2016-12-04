@@ -83,7 +83,8 @@ def trend (request):
   json_data['trend'] = []
 
   for year in xrange(start_year, end_year+1):
-    for month in xrange(start_month, end_month+1):
+    start_month = 5 if year == 2014 else 1;
+    for month in xrange(1, end_month+1):
       query = TermOfPost.objects.filter(post__release_time__year = year, post__release_time__month = month)
       amount = query.filter(term__value = keyword).count()
       date = str(year) + '/' + str(month)

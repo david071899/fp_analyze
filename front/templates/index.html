@@ -168,6 +168,13 @@
           linear-gradient(to right, transparent 35%, #d00 35%, #d00 65%, transparent 65%);     
       }
     /* section-6 */
+      .trend {
+        position: absolute;
+        width: 45%;
+        top: 5%;
+        left: 20%;
+        background-color: white;
+      }
     /* section-7 */
       .filter {
         position: relative;
@@ -430,7 +437,7 @@
           <input id="input" type="text">
           <button id="submit">submit</button>
         </div>
-        <div class="chart">
+        <div class="trend">
           <canvas id="chart-area" width="400" height="400" class="zone chart"></canvas>
         </div>
       </div>
@@ -630,6 +637,45 @@
   });
 
   // section-6
+  var chart_data = {
+    labels: [],
+    datasets: [
+      {
+        label: "trend",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "rgba(75,192,192,0.4)",
+        borderColor: "rgba(75,192,192,1)",
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "rgba(75,192,192,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [],
+        spanGaps: false,
+      }
+    ]
+  };
+
+  var ctx = $('.section-6 #chart-area');
+  var section6_chart = new Chart(ctx, {
+    type: 'line',
+    data: chart_data,
+    options: {
+      animation: {
+        duration: 3000
+      },
+    },
+  });
+
   var keyword = '';
 
   $('.section-6 #submit').on('click', function() {
@@ -639,53 +685,14 @@
       type: 'GET',
       success: function (data) {
         console.log(data);
-        generate_chart(data);
+
+        section6_chart.data.datasets[0].label = keyword;
+        section6_chart.data.datasets[0].data = data['trend'];
+        section6_chart.data.labels = data['period'];
+        section6_chart.update();
       }
     })
   })
-
-  function generate_chart (data) {
-
-    var chart_data = {
-      labels: data['period'],
-      datasets: [
-        {
-          label: "trend",
-          fill: false,
-          lineTension: 0.1,
-          backgroundColor: "rgba(75,192,192,0.4)",
-          borderColor: "rgba(75,192,192,1)",
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: "rgba(75,192,192,1)",
-          pointBackgroundColor: "#fff",
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: "rgba(75,192,192,1)",
-          pointHoverBorderColor: "rgba(220,220,220,1)",
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: data['trend'],
-          spanGaps: false,
-        }
-      ]
-    };
-
-    var ctx = $('.section-6 #chart-area');
-    var section6_chart = new Chart(ctx, {
-      type: 'line',
-      data: chart_data,
-      options: {
-        animation: {
-          duration: 3000
-        },
-      },
-    });
-  }
-
 
   // section-7
   new Vue({
