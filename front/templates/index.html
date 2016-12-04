@@ -4,63 +4,636 @@
   <title>demo</title>
   <meta http-equiv="Access-Control-Allow-Origin" content="*" />
   <style type="text/css">
-    #filter {
-      position: relative;
-      margin-top: 50px;
-      text-align: center;
-    }
-    #main {
-      top: 5%;
-      left: 10%;
-      width: 80%;
-      height: 80%;
-      border-style: solid;
-      border-width: 3px;
-      border-radius: 20px;
-      padding: 10px 10px 10px 10px;
-    }
-    [v-cloak] {
-      display: none;
-    }
+    /* section-1 */
+      .panel .main-img {
+        width: 50%;
+        height: 100%;
+        position: relative;
+        transform: translateY(-50%) translateX(-50%);
+        top: 40%;
+        left: 50%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 50%;
+        background-position: 100% 135%;
+      }
+      .panel .scroll-down {
+        width: 100vw;
+        position: absolute;
+        bottom: 0px;
+        text-align: center;
+      }
+      .panel .scroll-down i {
+        color: #34495e;
+        font-size: 6em;
+        margin-bottom: 20px;
+        animation-name: pounding;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+      }
+    /* section-2 */
+      .factory {
+        position: relative;
+        transform: translateY(-50%) translateX(-50%);
+        top: 50%;
+        left: 50%;
+        height: 700px;
+      }
+      .row {
+        position: relative;
+        top: 10%;
+        left: 1%;
+        width: 90%;
+        border-color: white;
+        border-radius: 30px;
+        margin-top: 45px;
+        padding: 10px 5px 10px 30px;
+      }
+      .row img {
+        position: relative;
+        height: 100px;
+      }
+      .row .row-content {
+        width: 80%;
+        color: #727272;
+        text-align: center;
+        font-size: 2em;
+        line-height: 3;
+      }
+    /* section-3 */
+      .content-flex {
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 60%;
+        top: 30%;
+        padding: 0 5% 0 5%;
+      }
+      .content-flex .box {
+        position: relative;
+        width: 30%;
+        height: 100%;
+      }
+      .content-flex .box img {
+        position: relative;
+        height: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .content-flex .box .text{
+        color: #727272;
+        margin-top: 30px;
+        text-align: center;
+        font-size: 2em;
+      }
+    /* section-4 & section-5 */
+      .btn-group {
+        position: relative;
+        top: 10%;
+        height: 80%;
+        width: 100%;
+        float: left;
+      }
+      .btn-group .btn-grid {
+        display: inline-block;
+        position: relative;
+        width: 39%;
+        margin: 5% 5% 0px 5%;
+        height: 30%;
+      }
+      .btn-group .btn-grid .btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 200px;
+        height: 50px;
+        line-height: 2;
+        text-align: center;      
+        padding: 10px 40px;
+        float: left;
+        border-radius: 10px;
+        font-size: 25px;
+        color: #FFF;
+        text-decoration: none;
+        cursor: pointer;
+        /*background-color: white;
+        border-bottom: 5px solid #bdc3c7;
+        text-shadow: 0px -2px #bdc3c7;
+        color: #3498db;*/
+        -webkit-user-select: none;
+      }
+      .btn-group .btn-grid .btn-white {
+        background-color: white;
+        border-bottom: 5px solid #bdc3c7;
+        text-shadow: 0px -2px #bdc3c7;
+        color: #3498db;
+      }
+      .btn-group .btn-grid .btn-blue {
+        background-color: #3498db;
+        border-bottom: 5px solid #2C81BA;
+        text-shadow: 0px -2px #2C81BA;
+        color: white; 
+      }
+      .btn-group .btn-grid .btn-animate {
+        transition: all 0.1s;
+        -webkit-transition: all 0.1s;
+      }
+      .btn-group .btn-grid .btn-animate:active {
+        transform: translate(0px,5px);
+        -webkit-transform: translate(0px,5px);
+        text-shadow: 0px 0px #bdc3c7;
+        border-bottom: 1px solid;
+      }
+      .chart {
+        display: none;
+        position: absolute;
+        width: 450px;
+        top: 20%;
+        left: 43%;
+        background-color: white;
+      }
+      .cross {
+        display: none;
+        position: absolute;
+        top: 10%;
+        left: 30%;
+        width: 500px;
+        height: 500px;
+        transform: rotate(45deg);
+        background: linear-gradient(to bottom, transparent 35%, #d00 35%, #d00 65%,  transparent 65%),
+          linear-gradient(to right, transparent 35%, #d00 35%, #d00 65%, transparent 65%);     
+      }
+    /* section-6 */
+    /* section-7 */
+      .filter {
+        position: relative;
+        top: 5%;
+        text-align: center;
+      }
+      .wordcloud {
+        width: 80%;
+        height: 80%;
+        left: 10%;
+        top: 10%;
+      }
+      [v-cloak] {
+        display: none;
+      }
+    /* general */
+      body {
+        overflow-x: hidden;
+        margin: 0px;
+      }
+      .main_layer {
+        width: 100%;
+        height: 100%;
+      }
+      .animate-inital {
+        display: none;
+      }
+      .section {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: white;
+      }
+      .section-color1 {
+        background-color: #B7E8D8;
+      }
+      .section-color2 {
+        background-color: #FCF083;
+      }
+      .section-color3 {
+        background-color: #3498db;
+      }
+      .section-color4 {
+        background-color: #B7E8D8;
+      }
+      .title-color-white {
+        color: #FFF6EA;
+      }
+      .panel {
+        height: 100vh;
+      }
+      .content-left {
+        position: absolute;
+        height: 100%;
+        width: 50%;
+      }
+      .content-right {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        left: 50%;
+      }
+      .title {
+        position: relative;
+        top: 8%;
+        font-size: 3em;
+        text-align: center;
+        color: #355872;
+      }
+    /* animate */
+      @keyframes pounding {
+        0%   {transform: translate(0,0);}
+        50%  {transform: translate(0,20px);}
+        100% {transform: translate(0,0);}
+      }
+      .shift-from-right {
+        animation-name: shift-from-right;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out; 
+      }
+      @keyframes shift-from-right {
+        0%   {
+          transform: translate(50px,0);
+          opacity: 0;
+        }
+        100% {
+          transform: translate(0,0);
+          opacity: 1;
+        }
+      }
+      .shift-from-left {
+        animation-name: shift-from-left;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out; 
+      }
+      @keyframes shift-from-left {
+        0%   {
+          transform: translate(-50px,0);
+          opacity: 0;
+        }
+        100% {
+          transform: translate(0,0);
+          opacity: 1;
+        }
+      }
+      .pop {
+        animation-name: pop;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+      }
+      @keyframes pop {
+        0%   {
+          transform: translate(0,40px);
+          opacity: 0;
+        }
+        100% {
+          transform: translate(0,0);
+          opacity: 1;
+        }
+      }
+      .shake {
+        animation-name: shake;
+        animation-duration: 0.7s;
+        animation-timing-function: ease-in-out;
+      }
+      @keyframes shake {
+        0%   {
+          transform: rotate(45deg) translate(10px,0);
+        }
+        25%   {
+          transform: rotate(45deg) translate(-10px,0);
+        }
+        50%   {
+          transform: rotate(45deg) translate(10px,0);
+        }
+        75%   {
+          transform: rotate(45deg) translate(-10px,0);
+        }
+        100% {
+          transform: rotate(45deg) translate(0,0);
+        }
+      }
   </style>
   {% load static %}
-  <script type="text/javascript" src="{% static 'wordcloud/src/wordcloud2.js' %}"></script>
   <script type="text/javascript" src="{% static 'wordcloud2.js' %}"></script>
   <script
     src="https://code.jquery.com/jquery-3.1.1.min.js"
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
+  <script src="//code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
+  <script type="text/javascript" src="{% static 'number-animate.js' %}"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
-<body style="position: absolute;;width: 100%;height: 100%;margin: 0px;">
-  <div id='filter'>
-    <select class="year">
-      <option value="2014">2014</option>
-      <option value="2015">2015</option>
-      <option value="2016">2016</option>
-    </select>
-    <select class="month">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-      <option value="11">11</option>
-      <option value="12">12</option>
-    </select>
-    <input type="submit" value="submit" class="filter_btn" v-on:click='filter_submit()'
->
-  </div>
-  <div id="main" v-cloak>
-    
+<body>
+  <div class="main_layer">
+    <section class="section">
+      <div class="panel">
+        <div class="main-img" style="background-image: url({% static 'img/main.png' %});"></div>
+        <div class="scroll-down">
+          <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </div>
+      </div>
+    </section>
+    <section class="section section-2 section-color2">
+      <div class="panel">
+        <div class="content-left shift-from-left animate-inital">
+          <img class="factory " src="{% static 'img/factory.png' %}">
+        </div>
+        <div class="content-right">
+          <div class="title shift-from-right animate-inital">How it works</div>
+          <div class="row pop animate-inital">
+            <img src="{% static 'img/binary.png' %}">
+            <div class="row-content">crawl the posts</div>
+          </div>
+          <div class="row pop animate-inital">
+            <img src="{% static 'img/analytics.svg' %}">
+            <div class="row-content">text mining & counting</div>
+          </div>
+          <div class="row pop animate-inital">
+            <img src="{% static 'img/statistics.svg' %}">
+            <div class="row-content">analyze data</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section section-3">
+      <div class="panel">
+        <div class="content-flex">
+          <div class="box box-1 animate-inital pop">
+            <img src="{% static 'img/post.svg' %}">
+            <div class="text"><span id="posts">0</span> posts</div>
+          </div>
+          <div class="box box-2 animate-inital pop">
+            <img src="{% static 'img/like.svg' %}">
+            <div class="text"><span id="likes">0</span> likes</div>
+          </div>
+          <div class="box box-3 animate-inital pop">
+            <img src="{% static 'img/chat.svg' %}">
+            <div class="text"><span id="comments">0</span> comments</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section section-4 section-color3">
+      <div class="panel">
+        <div class="title title-color-white pop animate-inital">
+          猜猜哪個系出現頻率最高？
+        </div>
+        <div class="btn-group pop animate-inital">
+          <div class="btn-grid">
+            <div class="btn btn-animate btn-white correct">材料系</div>
+          </div>
+          <div class="btn-grid">
+            <div class="btn btn-animate btn-white wrong">工科系</div>
+          </div>
+          <div class="btn-grid">
+            <div class="btn btn-animate btn-white wrong">計財系</div>
+          </div>
+          <div class="btn-grid">
+            <div class="btn btn-animate btn-white wrong">動機系</div>
+          </div>
+        </div>
+        <div class="chart pop">
+          <canvas id="chart-area" width="400" height="400" class="zone chart"></canvas>
+        </div>
+        <div class="cross shake"></div>
+      </div>
+    </section>
+    <section class="section section-5">
+      <div class="panel">
+        <div class="title pop animate-inital">
+          猜猜哪個社團出現頻率最高？
+        </div>
+        <div class="btn-group pop animate-inital">
+          <div class="btn-grid">
+            <div class="btn btn-animate btn-blue correct">科服社</div>
+          </div>
+          <div class="btn-grid">
+            <div class="btn btn-animate btn-blue wrong">藍天社</div>
+          </div>
+          <div class="btn-grid">
+            <div class="btn btn-animate btn-blue wrong">鋼琴社</div>
+          </div>
+          <div class="btn-grid">
+            <div class="btn btn-animate btn-blue wrong">原文社</div>
+          </div>
+        </div>
+        <div class="chart pop">
+          <canvas id="chart-area" width="400" height="400" class="zone chart"></canvas>
+        </div>
+        <div class="cross shake"></div>
+      </div>
+    </section>
+    <section class="section section-6 section-color4">
+      <div class="panel">
+      </div>
+    </section>
+    <section class="section section-7">
+      <div class="panel">
+        <div id='filter' class="filter">
+          <select class="year">
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+          </select>
+          <select class="month">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+          <input type="submit" value="submit" class="filter_btn" v-on:click='filter_submit()'>
+        </div>
+        <div id="main" class="wordcloud" v-cloak></div>
+      </div>
+    </section>
+    <section class="section">
+    </section>
   </div>
 </body>
 <script type="text/javascript">
+
+  // general
+  var brower_height = $(window).height() 
+
+  $(function () {
+    $(window).scroll(function() {
+      console.log(($(this).scrollTop() / brower_height))
+
+      if (($(this).scrollTop() / brower_height) > 0.4) {
+        $('.section-2 .content-left').show();
+        
+        setTimeout(
+          function () {
+            $('.section-2 .content-right .title').show()
+          }, 500);
+
+        setTimeout(
+          function () {
+            $('.section-2 .content-right .row').css('display','flex');
+          }, 1000);
+      }
+
+      if (($(this).scrollTop() / brower_height) > 1.4) {
+        $('.box-1').show();
+        
+        setTimeout(
+          function () {
+            $('.box-2').show();
+          }, 400);
+
+        setTimeout(
+          function () {
+            $('.box-3').show();
+            $('#posts').animateNumbers(4321);
+            $('#likes').animateNumbers(4321);
+            $('#comments').animateNumbers(4321);
+          }, 800);
+      }
+
+      if (($(this).scrollTop() / brower_height) > 2.4) {
+        $('.section-4 .title').show();
+
+        setTimeout(
+          function () {
+            $('.section-4 .btn-group').show();
+          }, 400);
+      }
+
+      if (($(this).scrollTop() / brower_height) > 3.4) {
+        $('.section-5 .title').show();
+
+        setTimeout(
+          function () {
+            $('.section-5 .btn-group').show();
+          }, 400);
+      }
+    })
+  })
+
+  // section-4
+  $('.section-4 .correct').on('click', function() {
+    $('.section-4 .wrong').css('opacity','0.2');
+    $('.section-4 .wrong').attr('disabled', true).off('click');;
+    $(this).css('background-color','#2ECC71');
+    $(this).css('color','white');
+    $(this).css('text-shadow','0px 0px');
+    $(this).css('border-style','none');
+    $('.section-4 .chart').show();
+  });
+
+  $('.section-4 .wrong').on('click', function() {
+    $('.section-4 .cross').show();
+    $('.section-4').effect( "shake",  {times:4}, 1000);
+    setTimeout(function() {
+      $('.section-4 .cross').hide();
+    }, 1000)
+  });
+
+  var data = {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+          {
+              label: "rank of department",
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1,
+              data: [105, 59, 80, 81, 56, 55, 40],
+          }
+      ],
+  };
+  var ctx = $('.section-4 #chart-area');
+  var section4_chart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      animation: {
+        duration: 3000
+      },
+    },
+  });
+
+  // section-5
+  $('.section-5 .correct').on('click', function() {
+    $('.section-5 .wrong').css('opacity','0.2');
+    $('.section-5 .wrong').attr('disabled', true).off('click');;
+    $(this).css('background-color','#2ECC71');
+    $(this).css('color','white');
+    $(this).css('text-shadow','0px 0px');
+    $(this).css('border-style','none');
+    $('.section-5 .chart').show();
+  });
+
+  $('.section-5 .wrong').on('click', function() {
+    $('.section-5 .cross').show();
+    $('.section-5').effect( "shake",  {times:4}, 1000);
+    setTimeout(function() {
+      $('.section-5 .cross').hide();
+    }, 1000)
+  });
+
+  var data = {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+          {
+              label: "rank of department",
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1,
+              data: [105, 59, 80, 81, 56, 55, 40],
+          }
+      ],
+  };
+  var ctx = $('.section-5 #chart-area');
+  var section4_chart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      animation: {
+        duration: 3000
+      },
+    },
+  });
+
+  // section-6
+
+  // section-7
   new Vue({
     el: 'body',
     data: {

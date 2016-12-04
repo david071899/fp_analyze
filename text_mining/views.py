@@ -60,7 +60,7 @@ def term_rank_by_post (request):
       all_terms = list()
       for post in all_posts:
         for term in post.termofpost_set.order_by('-tf_idf')[:10]:
-          all_terms.append(term.term.value)
+          all_terms.append(term.term.value) if term.tf_idf > 0 else 0
 
       terms_set = set(all_terms)
 
