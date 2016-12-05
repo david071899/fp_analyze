@@ -4,6 +4,63 @@
   <title>demo</title>
   <meta http-equiv="Access-Control-Allow-Origin" content="*" />
   <style type="text/css">
+    /* general */
+      body {
+        overflow-x: hidden;
+        margin: 0px;
+      }
+      .main_layer {
+        width: 100%;
+        height: 100%;
+      }
+      .animate-inital {
+        display: none;
+      }
+      .section {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: white;
+      }
+      .section-color1 {
+        background-color: #B7E8D8;
+      }
+      .section-color2 {
+        background-color: #FCF083;
+      }
+      .section-color3 {
+        background-color: #3498db;
+      }
+      .section-color4 {
+        background-color: #B7E8D8;
+      }
+      .title-color-white {
+        color: #FFF6EA;
+      }
+      .title-color-black {
+        color: #355872;
+      }
+      .panel {
+        height: 100vh;
+      }
+      .content-left {
+        position: absolute;
+        height: 100%;
+        width: 50%;
+      }
+      .content-right {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        left: 50%;
+      }
+      .title {
+        position: relative;
+        top: 8%;
+        font-size: 3em;
+        text-align: center;
+      }
     /* section-1 */
       .panel .main-img {
         width: 50%;
@@ -120,10 +177,6 @@
         color: #FFF;
         text-decoration: none;
         cursor: pointer;
-        /*background-color: white;
-        border-bottom: 5px solid #bdc3c7;
-        text-shadow: 0px -2px #bdc3c7;
-        color: #3498db;*/
         -webkit-user-select: none;
       }
       .btn-group .btn-grid .btn-white {
@@ -168,11 +221,39 @@
           linear-gradient(to right, transparent 35%, #d00 35%, #d00 65%, transparent 65%);     
       }
     /* section-6 */
-      .trend {
+      .search_bar {
+        width: 20%;
+        text-align: center;
+        top: 20%;
         position: absolute;
-        width: 45%;
-        top: 5%;
-        left: 20%;
+      }
+      .search_bar .group {
+        margin-top: 60px;
+        padding-left: 50px;
+      }
+      .search_bar .group input {
+        font-size: 20px;
+        width: 200px;
+        padding: 10px 10px 10px 5px;
+        border-style: none;
+      }
+      .search_bar .group .line1 {
+        border-bottom: 2px solid rgba(75,192,192,1);
+      }
+      .search_bar .group .line2 {
+        border-bottom: 2px solid rgba(255,170,153,1);
+      }
+      .search_bar .group .line3 {
+        border-bottom: 2px solid rgba(255,240,127,1);
+      }
+      .search_bar .group input:focus {
+        outline: none;
+      }
+      .trend {
+        position: relative;
+        width: 70%;
+        left: 28%;
+        top: 12%;
         background-color: white;
       }
     /* section-7 */
@@ -189,61 +270,6 @@
       }
       [v-cloak] {
         display: none;
-      }
-    /* general */
-      body {
-        overflow-x: hidden;
-        margin: 0px;
-      }
-      .main_layer {
-        width: 100%;
-        height: 100%;
-      }
-      .animate-inital {
-        display: none;
-      }
-      .section {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: block;
-        background-color: white;
-      }
-      .section-color1 {
-        background-color: #B7E8D8;
-      }
-      .section-color2 {
-        background-color: #FCF083;
-      }
-      .section-color3 {
-        background-color: #3498db;
-      }
-      .section-color4 {
-        background-color: #B7E8D8;
-      }
-      .title-color-white {
-        color: #FFF6EA;
-      }
-      .panel {
-        height: 100vh;
-      }
-      .content-left {
-        position: absolute;
-        height: 100%;
-        width: 50%;
-      }
-      .content-right {
-        position: absolute;
-        width: 50%;
-        height: 100%;
-        left: 50%;
-      }
-      .title {
-        position: relative;
-        top: 8%;
-        font-size: 3em;
-        text-align: center;
-        color: #355872;
       }
     /* animate */
       @keyframes pounding {
@@ -347,7 +373,7 @@
           <img class="factory " src="{% static 'img/factory.png' %}">
         </div>
         <div class="content-right">
-          <div class="title shift-from-right animate-inital">How it works</div>
+          <div class="title title-color-black shift-from-right animate-inital">How it works</div>
           <div class="row pop animate-inital">
             <img src="{% static 'img/binary.png' %}">
             <div class="row-content">crawl the posts</div>
@@ -383,7 +409,7 @@
     </section>
     <section class="section section-4 section-color3">
       <div class="panel">
-        <div class="title title-color-white pop animate-inital">
+        <div class="title-color-white title pop animate-inital">
           猜猜哪個系出現頻率最高？
         </div>
         <div class="btn-group pop animate-inital">
@@ -408,7 +434,7 @@
     </section>
     <section class="section section-5">
       <div class="panel">
-        <div class="title pop animate-inital">
+        <div class="title title-color-black pop animate-inital">
           猜猜哪個社團出現頻率最高？
         </div>
         <div class="btn-group pop animate-inital">
@@ -431,14 +457,24 @@
         <div class="cross shake"></div>
       </div>
     </section>
-    <section class="section section-6 section-color4">
+    <section class="section section-6">
       <div class="panel">
-        <div class="">
-          <input id="input" type="text">
-          <button id="submit">submit</button>
+        <div class="title title-color-black">
+          靠清聲量趨勢分析
+        </div>
+        <div class="search_bar">
+          <div class="group">
+            <input type="text" class="line1" order="0" placeholder="search something~">
+          </div>
+          <div class="group">
+            <input type="text" class="line2" order="1" placeholder="search something~">
+          </div>
+          <div class="group">
+            <input type="text" class="line3" order="2" placeholder="search something~">
+          </div>
         </div>
         <div class="trend">
-          <canvas id="chart-area" width="400" height="400" class="zone chart"></canvas>
+          <canvas id="chart-area" width="800" height="400" class="zone"></canvas>
         </div>
       </div>
     </section>
@@ -507,9 +543,9 @@
         setTimeout(
           function () {
             $('.box-3').show();
-            $('#posts').animateNumbers(4321);
-            $('#likes').animateNumbers(4321);
-            $('#comments').animateNumbers(4321);
+            $('#posts').animateNumbers(43212);
+            $('#likes').animateNumbers(648327);
+            $('#comments').animateNumbers(23210);
           }, 800);
       }
 
@@ -641,7 +677,7 @@
     labels: [],
     datasets: [
       {
-        label: "trend",
+        label: "line1",
         fill: false,
         lineTension: 0.1,
         backgroundColor: "rgba(75,192,192,0.4)",
@@ -655,6 +691,50 @@
         pointBorderWidth: 1,
         pointHoverRadius: 5,
         pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [],
+        spanGaps: false,
+      },
+      {
+        label: "line2",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "rgba(255,170,153,0.4)",
+        borderColor: "rgba(255,170,153,1)",
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "rgba(255,170,153,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(255,170,153,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [],
+        spanGaps: false,
+      },
+      {
+        label: "line3",
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: "rgba(255,240,127,0.4)",
+        borderColor: "rgba(255,240,127,1)",
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "rgba(255,240,127,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(255,240,127,1)",
         pointHoverBorderColor: "rgba(220,220,220,1)",
         pointHoverBorderWidth: 2,
         pointRadius: 1,
@@ -676,22 +756,23 @@
     },
   });
 
-  var keyword = '';
+  $('.section-6 .group input').keypress(function(key) {
+    if(key.which == 13) {
+      var keyword = $(this).val();
+      var line = parseInt($(this).attr('order'));
+      $.ajax({
+        url: `http://140.114.89.71:8000/api/trend?keyword=${ keyword }`,
+        type: 'GET',
+        success: function (data) {
+          console.log(data);
 
-  $('.section-6 #submit').on('click', function() {
-    keyword = $('.section-6 #input').val();
-    $.ajax({
-      url: `http://140.114.89.71:8000/api/trend?keyword=${ keyword }`,
-      type: 'GET',
-      success: function (data) {
-        console.log(data);
-
-        section6_chart.data.datasets[0].label = keyword;
-        section6_chart.data.datasets[0].data = data['trend'];
-        section6_chart.data.labels = data['period'];
-        section6_chart.update();
-      }
-    })
+          section6_chart.data.datasets[line].label = keyword;
+          section6_chart.data.datasets[line].data = data['trend'];
+          section6_chart.data.labels = data['period'];
+          section6_chart.update();
+        }
+      })      
+    }
   })
 
   // section-7
