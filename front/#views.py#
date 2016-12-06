@@ -1,0 +1,9 @@
+from django.shortcuts import render
+
+def index(request):
+  a = []
+  a.append('a')
+  a.remove
+
+  
+  return render(request, 'index.html')

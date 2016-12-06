@@ -84,7 +84,33 @@ def trend (request):
   return response
 
 def department (request):
-  pass
+  department_list = ['理學院','數學系','物理系','化學系','理學院學士班','理雙','工學院','化學工程學系 ','化工',
+  '動力機械工程學系','動機','材料科學工程學系','材料','工業工程與工程管理學系','工工','工學院學士班','工院',
+  '電機資訊學院','資訊工程學系','資工','電機工程學系','電機','電機資訊學院學士班','電資院學士班','人文社會學院',
+  '中國文學系','中文','外國語文學系','外文','外文系','人文社會學院學士班','人社','生命科學院','生命科學系','生科',
+  '醫學科學系','醫科','生命科學院學士班','生科院學士班','原子科學院','工程與系統科學系','工科','生醫工程與環境科學系',
+  '醫環','原子科學院學士班','原科','科技管理學院','計量財務金融學系','計財','經濟學系','經濟','科技管理學院學士班','科管',
+  '清華學院學士班']
+
+  json_data = dict()
+  # query the data
+  result = map(term_filter, department_list)
+  # filter None data
+  result = filter(lambda term: term != None, result)
+  # Sorted data by frequency_of_all_post
+  result = sorted(result, key = operator.attrgetter('frequency_of_all_post'), reverse = True)
+  # detect club name & frequency
+  json_data['dep_name'] = map(lambda term: term.value, result)
+
+  json_data['dep_freq'] = map(lambda term: term.frequency_of_all_post, result)
+
+  response = JsonResponse(json_data, safe = False)
+  response["Access-Control-Allow-Origin"] = "*"
+  response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+  response["Access-Control-Max-Age"] = "1000"
+  response["Access-Control-Allow-Headers"] = "*"
+
+
 
 def club (request):
   club_list = ['TEDxNTHU','清華模擬聯合國','模聯','經濟商管學生會','AIESEC','aiesec','青年領袖研習社',
@@ -94,17 +120,17 @@ def club (request):
   '柔道社','劍道社','飛鏢社','自行車社','網球社','馬術社','啦啦隊','田徑隊','快樂兒童社','快兒','清華之愛社','清愛'
   ,'藍天','羅浮童子軍社','親善大使團','學生會','科服','原文','文服']
 
-  def club_filter (club_name):
-    return Term.objects.filter(value = club_name)[0] if Term.objects.filter(value = club_name) else None
-
+  json_data = dict()
   # query the data
-  result = map(club_filter, club_list)
+  result = map(term_filter, club_list)
   # filter None data
   result = filter(lambda term: term != None, result)
   # Sorted data by frequency_of_all_post
   result = sorted(result, key = operator.attrgetter('frequency_of_all_post'), reverse = True)
   # detect club name & frequency
-  json_data = map(lambda term:[term.value, term.frequency_of_all_post], result)
+  json_data['club_name'] = map(lambda term: term.value, result)
+
+  json_data['club_freq'] = map(lambda term: term.frequency_of_all_post, result)
 
   response = JsonResponse(json_data, safe = False)
   response["Access-Control-Allow-Origin"] = "*"
@@ -113,3 +139,6 @@ def club (request):
   response["Access-Control-Allow-Headers"] = "*"
 
   return response
+
+def term_filter (name):
+  return Term.objects.filter(value = name)[0] if Term.objects.filter(value = club_name) else None
