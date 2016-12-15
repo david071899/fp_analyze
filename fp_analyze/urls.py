@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
-from data_parser.views import parse_all_post, parse_all_post_content
+from data_parser.views import parse_all_post_content
 
 from text_mining.views import mining_and_counting, learn_seg_rnn, term_rank_by_post, tf_idf
 
@@ -29,7 +29,6 @@ from front.views import index
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^parse_all_post_content/', parse_all_post_content),
-    url(r'^parse_all_post/', parse_all_post),
     url(r'^text_mining/mining_and_counting', mining_and_counting),
     url(r'^text_mining/tf_idf', tf_idf),
     url(r'^text_mining/term_rank_by_post', term_rank_by_post),

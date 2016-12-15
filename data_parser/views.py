@@ -29,27 +29,33 @@ def parse_all_post_content (request):
 
   access_token = requests.get(access_token_request_url).text.split('=')[-1]
 
+  print access_token
+
   graph = facebook.GraphAPI(access_token = access_token, version = '2.2')
 
-  cowbeiNTHU_id = graph.get_object(id = 'cowbeiNTHU')['id']
+  school = request.GET.get('school', 'nthu')
 
-  cowbeiNTHU_post = graph.get_connections(id = cowbeiNTHU_id, connection_name = 'posts?fields=message,created_time')
+  if school == 'nthu':
+    school_id = graph.get_object(id = 'cowbeiNTHU')['id']
+  elif school == 'nctu':
+    access_token = 'EAACEdEose0cBABVIGXOoV2NuqBYOcUGqtxKZATeJQyghzvP74DATku1pJ0e4VSolV6YnrsllTYHosMcHfTMrKQX5zk6ZADzS4uyfPrBQm8uvW8vN4EADxlh8gn59TFoGalEO9CIMBaZAoFhDSQbDKApZA10rSmnzAAw5QYoEKwZDZD'
+    graph = facebook.GraphAPI(access_token = access_token, version = '2.2')
+    school_id = graph.get_object(id = 'NCTUHATE')['id']
+  elif school == 'ntu':
+    school_id = graph.get_object(id = 'hateNTU')['id']
+
+  posts = graph.get_connections(id = school_id, connection_name = 'posts?fields=message,created_time')
 
   while True:
     try:
-      for p in cowbeiNTHU_post['data']:
+      for p in posts['data']:
         if 'message' in p.keys():
           print p['message']
 
-          Post.objects.update_or_create(
-            post_id = p['id'],
-            defaults = {
-              'content': p['message'],
-              'release_time': p['created_time']
-            }
-          )
-      if 'paging' in cowbeiNTHU_post:
-        cowbeiNTHU_post = requests.get(cowbeiNTHU_post['paging']['next']).json()
+          create_post(p, school)
+
+      if 'paging' in posts:
+        posts = requests.get(posts['paging']['next']).json()
       else:
         break
 
@@ -61,67 +67,15 @@ def parse_all_post_content (request):
   return render_to_response('index.html', RequestContext(request, locals()))
 
 
-def parse_all_post (request):
-
-  app_data = {'app_id': '253935675007631',
-              'app_secret': '4248e9d611cb3ad467d73614a96c2a5e'}
-
-  access_token_request_url = ("https://graph.facebook.com/oauth/access_token?"
-    "client_id=253935675007631"
-    "&client_secret=4248e9d611cb3ad467d73614a96c2a5e"
-    "&grant_type=client_credentials")
-
-  access_token = requests.get(access_token_request_url).text.split('=')[-1]
-  
-  # access_token = 'EAACEdEose0cBAFEzSEpGQAd05X2QflsHyY5dMH1lY6WMYeUZAq0ienIcQMEkZBj23hzMhEmILRRNmlvQzzGFBeniTy75Hjsnq9jIkb6WimMydNHmTDjAmlGwyE8iu9PHwZAMZCJap2u2eiXFgoytIUa0vVDaeMrvY1azC23ZCpwZDZD'
-
-  graph = facebook.GraphAPI(access_token = access_token, version = '2.2')
-
-  cowbeiNTHU_id = graph.get_object(id = 'cowbeiNTHU')['id']
-
-  print cowbeiNTHU_id
-
-  cowbeiNTHU_post = graph.get_connections(id = cowbeiNTHU_id, connection_name = 'posts?fields=likes.limit(100),comments.limit(100){like_count,from,message},created_time,message')
-
-  while True:
-    try:
-      
-      for p in cowbeiNTHU_post['data']:
-
-        if 'message' in p.keys():
-          create_post(p)
-
-          if 'likes' in p.keys():
-            create_user(p, 'like')
-
-          if 'comments' in p.keys():
-            create_user(p, 'comment')
-
-      cowbeiNTHU_post = requests.get(cowbeiNTHU_post['paging']['next']).json()
-
-    except  Exception as e:
-
-      print e  
-      break
-
-  return render_to_response('index.html', RequestContext(request, locals()))
-
-def create_post (data):
-
-  like_count = len(data['likes']['data']) if 'likes' in data.keys() else 0
-  comment_count = len(data['comments']['data']) if 'comments' in data.keys() else 0  
-
+def create_post (data, school):
   Post.objects.update_or_create(
     post_id = data['id'],
     defaults = {
       'content': data['message'],
       'release_time': data['created_time'],
-      'like_count': like_count,
-      'comment_count': comment_count
+      'school': school,
     }
   )
-
-  print data['message']
 
 def create_user (data, data_resource):
   post = Post.objects.get(post_id = data['id'])

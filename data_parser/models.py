@@ -14,6 +14,7 @@ class Post (models.Model):
   comment_count = models.IntegerField(default = 0)
   mining_check = models.BooleanField(default = False)
   term_frequency = JSONField()
+  school = models.CharField(max_length = 255)
   terms = models.ManyToManyField('text_mining.Term',through = 'TermOfPost')
 
   def __str__(self):
