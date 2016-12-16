@@ -38,8 +38,9 @@ def all_terms (request):
 def filter_post (request):
   year = request.GET.get('year', 2014)
   month = request.GET.get('month', 1)
+  school = request.GET.get('school', 'nthu')
 
-  json_data = Wordcloud.objects.get(year = year, month = month).word_data
+  json_data = Wordcloud.objects.get(year = year, month = month, school = school).word_data
 
   response = JsonResponse(json_data, safe = False)
   response["Access-Control-Allow-Origin"] = "*"
