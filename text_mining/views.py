@@ -7,6 +7,7 @@ from text_mining.models import Term
 from api.models import Wordcloud
 
 import math
+from itertools import groupby
 
 from segment.main import start_segment
 from learn_seg_rnn.main import start_learning
@@ -105,7 +106,7 @@ def count_term_rank (posts):
     month = post_iter[0].split('/')[2]
 
     post_grouper = post_iter[1]
-    
+
     all_terms = list()
     for post in post_grouper:
       for term in post.termofpost_set.order_by('-tf_idf')[:10]:
