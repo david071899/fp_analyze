@@ -142,3 +142,4 @@ def club (request):
 
 def term_filter (name):
   return Term.objects.filter(value = name)[0] if Term.objects.filter(value = club_name) else None
+

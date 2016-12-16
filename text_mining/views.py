@@ -77,6 +77,51 @@ def term_rank_by_post (request):
         }
       )
 
+def term_rank_by_post2 (request):
+  # order post by school and time
+  posts = Post.objects.order_by('school', 'release_time')
+  # separate post by datetime
+  posts = separate_posts_by_datetime(posts)
+  # start count term rank
+  count_term_rank(posts)
+
+
 def learn_seg_rnn (request):
   start_learning()
 
+# ------------------ private function ---------------------
+
+def separate_post_by_school (school):
+  return Post.objects.filter(school = school)
+
+def separate_posts_by_datetime (posts):
+  return groupby(posts, lambda post: post.school + '/' + str(post.release_time.year) + '/' + str(post.release_time.month))
+
+def count_term_rank (posts):
+  for post_iter in posts:
+    
+    school = post_iter[0].split('/')[0]
+    year = post_iter[0].split('/')[1]
+    month = post_iter[0].split('/')[2]
+
+    post_grouper = post_iter[1]
+    
+    all_terms = list()
+    for post in post_grouper:
+      for term in post.termofpost_set.order_by('-tf_idf')[:10]:
+        all_terms.append(term.term.value) if term.tf_idf > 0 else 0
+
+    terms_set = set(all_terms)
+    terms_freq = map(lambda x: [x, all_terms.count(x)] if all_terms.count(x) > 3 else [], terms_set)
+    terms_freq = filter(None, terms_freq)
+
+    print school, year, '/', month, 'finished'
+
+    Wordcloud.objects.update_or_create(
+      year = year,
+      month = month,
+      school = school,
+      defaults = {
+        'word_data': terms_freq
+      }
+    )

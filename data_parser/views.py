@@ -43,6 +43,8 @@ def parse_all_post_content (request):
     school_id = graph.get_object(id = 'NCTUHATE')['id']
   elif school == 'ntu':
     school_id = graph.get_object(id = 'hateNTU')['id']
+  elif school == 'nccu':
+    school_id = graph.get_object(id = 'NCCUHate')['id']
 
   posts = graph.get_connections(id = school_id, connection_name = 'posts?fields=message,created_time')
 
