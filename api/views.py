@@ -119,7 +119,7 @@ def club (request):
   '清華鼓坊','鋼琴社','合唱社','人聲樂創社','街音社','數位媒體創作社','戲劇社','書藝社','光畫社','光舞藝術社','當代舞蹈社',
   '國標社','世界民族舞蹈社','清華旗隊','圍棋社','西洋棋社','魔術社','中醫社','烹飪社','飲品社','調酒社','光舞社','國術社',
   '柔道社','劍道社','飛鏢社','自行車社','網球社','馬術社','啦啦隊','田徑隊','快樂兒童社','快兒','清華之愛社','清愛'
-  ,'藍天','羅浮童子軍社','親善大使團','學生會','科服','原文','文服']
+  ,'藍天','羅浮童子軍社','親善大使團','學生會','科服','原文','文服','熱舞','熱舞社']
 
   json_data = dict()
   # query the data
@@ -141,6 +141,11 @@ def club (request):
 
   return response
 
+  def always_cares_about (request):
+    Wordcloud.objects.order_by('school')
+    pass
+
+# -------- private function --------------
 def term_filter (name):
   return Term.objects.filter(value = name)[0] if Term.objects.filter(value = club_name) else None
 

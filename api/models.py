@@ -8,4 +8,5 @@ class Wordcloud (models.Model):
   year = models.IntegerField(default = 2014)
   month = models.IntegerField(default = 1)
   school = models.CharField(max_length = 255)
+  terms = JSONField()
   word_data = JSONField()

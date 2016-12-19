@@ -16,7 +16,7 @@ def mining_and_counting (request):
   start_segment()
   count_idf (request)
   tf_idf (request)
-  term_rank_by_post (request)
+  term_rank_by_post2 (request)
 
 def count_idf (request):
   print '--------------------------------'
@@ -123,6 +123,7 @@ def count_term_rank (posts):
       month = month,
       school = school,
       defaults = {
+        'terms': terms_set, 
         'word_data': terms_freq
       }
     )
