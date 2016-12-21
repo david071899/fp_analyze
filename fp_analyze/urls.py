@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 
 from data_parser.views import parse_all_post_content
 
-from text_mining.views import mining_and_counting, learn_seg_rnn, term_rank_by_post, tf_idf, term_rank_by_post2
+from text_mining.views import mining_and_counting, learn_seg_rnn, count_idf, term_rank_by_post, tf_idf, term_rank_by_post2
 
 from api.views import all_terms, filter_post, trend
 
@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^parse_all_post_content/', parse_all_post_content),
     url(r'^text_mining/mining_and_counting', mining_and_counting),
+    url(r'^text_mining/count_idf', count_idf),
     url(r'^text_mining/tf_idf', tf_idf),
     url(r'^text_mining/term_rank_by_post', term_rank_by_post),
     url(r'^text_mining/test_term_rank_by_post2', term_rank_by_post2),
