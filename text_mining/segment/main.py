@@ -45,7 +45,7 @@ def del_surplus_string (content) :
   sen_array = content.split('\n')
   try:
     del sen_array[0]
-    del sen_array[-1]
+    # del sen_array[-1]
   except:
     return content
   return ''.join(sen_array)
@@ -65,16 +65,14 @@ def seg_article(post_generator):
 
   post_amount = len(Post.objects.all())
 
-  i = 0
-
-  while (i < post_amount):
+  while (True):
 
     try:
       post = post_generator.next()
     except:
       break;
 
-    print post.id
+    print post.school, post.release_time.year, post.release_time.month
     # 刪除靠北清大 title & release time
     content = del_surplus_string(post.content)
     # 刪除標點符號

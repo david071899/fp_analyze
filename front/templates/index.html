@@ -550,6 +550,12 @@
             <option value="11">11</option>
             <option value="12">12</option>
           </select>
+          <select class="school">
+            <option value="nthu">NTHU</option>
+            <option value="nctu">NCTU</option>
+            <option value="nccu">NCCU</option>
+            <option value="ntu">NTU</option>
+          </select>
           <input type="submit" value="submit" class="filter_btn" v-on:click='filter_submit()'>
         </div>
         <div id="main" class="wordcloud" v-cloak></div>
@@ -894,9 +900,10 @@
         console.log('yoyo');
         let year = $(".year option:selected").val();
         let month = $(".month option:selected").val();
+        let school = $(".school option:selected").val();
 
         $.ajax({
-          url: `http://140.114.89.71:8000/api/filter_post?year=${ year }&month=${ month }`,
+          url: `http://140.114.89.71:8000/api/filter_post?year=${ year }&month=${ month }&school=${ school }`,
           type: 'GET',
           success: function (data) {
             WordCloud(document.getElementById('main'), { list: data, backgroundColor: 'white', rotateRatio: 0 });
