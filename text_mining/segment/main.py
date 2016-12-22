@@ -55,10 +55,9 @@ def post_generator():
   print '.................................................'
   print ' now have', post.count(), 'posts wait for mining '
   print '.................................................'
-  array = list(post)
   i = 0
-  while (i < len(array)):
-    yield array[i]
+  while (i < post.count()):
+    yield post[i]
     i += 1
 
 def seg_article(post_generator):
@@ -72,7 +71,7 @@ def seg_article(post_generator):
     except:
       break;
 
-    print post.school, post.release_time.year, post.release_time.month
+    print post.id, post.school, post.release_time.year, post.release_time.month
     # 刪除靠北清大 title & release time
     content = del_surplus_string(post.content)
     # 刪除標點符號
@@ -118,9 +117,9 @@ def seg_article(post_generator):
           }
         )
       except:
-        print "!"*120
-        print "Unexpected error:", sys.exc_info()[0]
-        print "!"*120
+        print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        print "Unexpected error:", sys.exc_info()[0], "error id:", post.id
+        print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         continue
 
     post.term_frequency = result
