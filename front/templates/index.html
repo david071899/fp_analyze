@@ -903,7 +903,7 @@
         let school = $(".school option:selected").val();
 
         $.ajax({
-          url: `http://140.114.89.71:8000/api/filter_post?year=${ year }&month=${ month }&school=${ school }`,
+          url: `http://127.0.0.1:8000/api/filter_post?year=${ year }&month=${ month }&school=${ school }`,
           type: 'GET',
           success: function (data) {
             WordCloud(document.getElementById('main'), { list: data, backgroundColor: 'white', rotateRatio: 0 });

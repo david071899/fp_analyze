@@ -18,6 +18,9 @@ def mining_and_counting (request):
   tf_idf (request)
   term_rank_by_post2 (request)
 
+def segment (request):
+  start_segment()
+
 def count_idf (request):
   print '--------------------------------'
   print '       start counting idf       '
@@ -40,7 +43,7 @@ def tf_idf (request):
     for term in post.termofpost_set.all():
 
       # only 大於一個字的名詞 count tf_idf
-      if (term.term.flag == 'n' or term.term.flag == 'nz' or term.term.flag == 'nr' or term.term.flag == 'ns') and len(term.term.value) > 1:
+      if (term.term.flag == 'n' or term.term.flag == 'nz' or term.term.flag == 'nr' or term.term.flag == 'ns'):
         term.tf_idf = term.term.idf * (term.quantity / float(term_amount))
       else:
         term.tf_idf = 0

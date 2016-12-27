@@ -7,6 +7,8 @@ import os
 import sys
 import re
 from threading import Thread
+from collections import Counter
+
 import jieba
 import jieba.posseg as pseg
 
@@ -15,7 +17,7 @@ def start_segment ():
   print '          start segment         '
   print '--------------------------------'
   
-  jieba.enable_parallel(4)
+  # jieba.enable_parallel(4)
   # 讀取自定義辭典
   for jeiba_dict in os.listdir(os.path.join(os.path.dirname(__file__), '../jieba')): 
     jieba.load_userdict(os.path.join(os.path.dirname(__file__), '../jieba/' + jeiba_dict))
@@ -51,27 +53,26 @@ def del_surplus_string (content) :
   return ''.join(sen_array)
 
 def post_generator():
-  post = Post.objects.filter(mining_check = False)
+  posts = Post.objects.filter(mining_check = False)
   print '.................................................'
-  print ' now have', post.count(), 'posts wait for mining '
+  print ' now have', posts.count(), 'posts wait for mining '
   print '.................................................'
-  i = 0
-  while (i < post.count()):
-    yield post[i]
-    i += 1
+  for post in posts:
+    yield post
 
 def seg_article(post_generator):
 
-  post_amount = len(Post.objects.all())
+  post_amount = Post.objects.count()
 
   while (True):
 
     try:
       post = post_generator.next()
     except:
-      break;
+      break
 
     print post.id, post.school, post.release_time.year, post.release_time.month
+    
     # 刪除靠北清大 title & release time
     content = del_surplus_string(post.content)
     # 刪除標點符號
@@ -82,29 +83,22 @@ def seg_article(post_generator):
     # 清除 \n & 空白
     seg_list = filter(lambda a: a.word != '\n' and a.word != ' ', seg_list)
 
-    result = dict()
-
-    for pair in seg_list:
-
-      # 重複的詞跳過
-      if pair.word not in result.keys():
-        quan = seg_list.count(pair)
-        flag = pair.flag
-        result[pair.word] = {'quan': quan, 'flag': flag}
+    # formal: {pair('word','flag'): times}
+    result = Counter(seg_list)
 
     for key,value in result.iteritems():
       try:
         # 取出或是創造一筆新的資料（詞）
         Term.objects.get_or_create(             
-          value = key,
+          value = key.word,
           defaults = {
             'frequency_of_all_post': 0,
-            'flag': value['flag']
+            'flag': key.flag
           }
         )
 
         # 出現在文章的次數加一
-        term = Term.objects.get(value = key)
+        term = Term.objects.get(value = key.word)
         term.frequency_of_all_post += 1          
         term.save()
 
@@ -113,7 +107,7 @@ def seg_article(post_generator):
           post = post,
           term = term,
           defaults = {
-            'quantity': value['quan']
+            'quantity': value
           }
         )
       except:
@@ -122,6 +116,6 @@ def seg_article(post_generator):
         print "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         continue
 
-    post.term_frequency = result
+    # post.term_frequency = result
     post.mining_check = True
     post.save()

@@ -38,7 +38,7 @@ def parse_all_post_content (request):
   if school == 'nthu':
     school_id = graph.get_object(id = 'cowbeiNTHU')['id']
   elif school == 'nctu':
-    access_token = 'EAACEdEose0cBABVIGXOoV2NuqBYOcUGqtxKZATeJQyghzvP74DATku1pJ0e4VSolV6YnrsllTYHosMcHfTMrKQX5zk6ZADzS4uyfPrBQm8uvW8vN4EADxlh8gn59TFoGalEO9CIMBaZAoFhDSQbDKApZA10rSmnzAAw5QYoEKwZDZD'
+    access_token = 'EAACEdEose0cBAKG9raBLxh4zPLIOmerEeNTFYt9pnd1UW2a1IAMVr4leUkKjWZCDAZBVB7P8ExESvZBZAbonHrDidlu411W09V0Viu1me6UvTesLz5S8vzNf61lLf1VzivP95xXgexZBVPvklLGtVC0vnXeJEGHunfhN2SZCUZBogZDZD'
     graph = facebook.GraphAPI(access_token = access_token, version = '2.2')
     school_id = graph.get_object(id = 'NCTUHATE')['id']
   elif school == 'ntu':
