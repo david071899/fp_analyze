@@ -26,7 +26,7 @@ def count_idf (request):
   print '       start counting idf       '
   print '--------------------------------'
 
-  post_amount = Post.objects.all().count()
+  post_amount = Post.objects.count()
 
   for term in Term.objects.all():
     term.idf = math.log10(post_amount / term.frequency_of_all_post)
@@ -43,7 +43,7 @@ def tf_idf (request):
     for term in post.termofpost_set.all():
 
       # only 大於一個字的名詞 count tf_idf
-      if (term.term.flag == 'n' or term.term.flag == 'nz' or term.term.flag == 'nr' or term.term.flag == 'ns'):
+      if (term.term.flag == 'n' or term.term.flag == 'nz' or term.term.flag == 'nr' or term.term.flag == 'ns') and len(term.term.value) > 1:
         term.tf_idf = term.term.idf * (term.quantity / float(term_amount))
       else:
         term.tf_idf = 0
@@ -68,7 +68,7 @@ def term_rank_by_post (request):
 
       terms_set = set(all_terms)
 
-      terms_freq = map(lambda x: [x, all_terms.count(x)] if all_terms.count(x) > 3 else [], terms_set)
+      terms_freq = map(lambda x: [x, all_terms.count(x)] if all_terms.count(x) > 2 else [], terms_set)
       terms_freq = filter(None, terms_freq)
 
       print terms_set
@@ -88,6 +88,9 @@ def term_rank_by_post2 (request):
   posts = separate_posts_by_datetime(posts)
   # start count term rank
   count_term_rank(posts)
+
+def count_trend_by_school (request):
+  pass
 
 
 def learn_seg_rnn (request):
